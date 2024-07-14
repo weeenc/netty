@@ -438,6 +438,9 @@ public final class NioEventLoop extends SingleThreadEventLoop {
         }
     }
 
+    /**
+     * 死循环监听，处理事件
+     */
     @Override
     protected void run() {
         for (;;) {
@@ -449,6 +452,7 @@ public final class NioEventLoop extends SingleThreadEventLoop {
 
                     case SelectStrategy.BUSY_WAIT:
                         // fall-through to SELECT since the busy-wait is not supported with NIO
+                        // 回退到 SELECT，因为 NIO 不支持 busy-wait
 
                     case SelectStrategy.SELECT:
                         select(wakenUp.getAndSet(false));
